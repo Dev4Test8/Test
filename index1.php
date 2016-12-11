@@ -62,3 +62,5 @@
 
     $res = parseYandexSms($smsText);
     print_r($res);
+
+    sleep(1);

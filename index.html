@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <title>Test2</title>
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <body>
+        <h1>Hello, world!</h1>
+        <button type="button" id="myButton" class="btn btn-primary">Выполнить тестовый запрос</button>
+
+        <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal title</h4>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script>
+//            var myLoader = (function(){
+//                var o = {};
+//                function init(options, callback)
+//                {
+//                    if(inited) return; inited = true;
+//                    o = $.extend(o, options || {});
+//                    $(function(){
+//                        callback();
+//                    });
+//                }
+//
+//
+//                return {
+//                    getPage: function(url, options)
+//                    {
+//                        init(options, function()
+//                        {
+//
+//                        });
+//                    }
+//                };
+//            }());
+            function getPage(url) {
+                var modal = '#myModal';
+                var loadTitle = 'Ожидайте загрузку контента!';
+                $(modal + ' .modal-title').html(url);
+                $(modal + ' .modal-body').html(loadTitle);
+                $(modal).modal('show');
+                $(modal + ' .modal-footer input').attr('disabled', 'disabled');
+                $(modal).on('hide.bs.modal', function (e) {
+                    alert(loadTitle);
+                    return false;
+                });
+                $.ajax({
+                    url: url,
+                    dataType : 'html'
+                }).done(function(res) {
+                    readyRequest(res);
+                }).fail(function(jqXHR, textStatus) {
+                    readyRequest(textStatus);
+                });
+                function readyRequest(txt) {
+                    $(modal + ' .modal-body').html(txt);
+                    $(modal + ' .modal-footer input').removeAttr('disabled');
+                    $(modal).off('hide.bs.modal');
+                }
+            }
+
+            $(function() {
+                $('#myButton').on('click', function(){
+                    getPage('index1.php');
+//                loadPages.getPage('index1.php');
+                });
+            });
+        </script>
+    </body>
+</html>
