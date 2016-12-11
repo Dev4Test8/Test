@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
         <title>Test2</title>
 
         <!-- Latest compiled and minified CSS -->
@@ -41,28 +41,7 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
         <script>
-//            var myLoader = (function(){
-//                var o = {};
-//                function init(options, callback)
-//                {
-//                    if(inited) return; inited = true;
-//                    o = $.extend(o, options || {});
-//                    $(function(){
-//                        callback();
-//                    });
-//                }
-//
-//
-//                return {
-//                    getPage: function(url, options)
-//                    {
-//                        init(options, function()
-//                        {
-//
-//                        });
-//                    }
-//                };
-//            }());
+
             function getPage(url) {
                 var modal = '#myModal';
                 var loadTitle = 'Ожидайте загрузку контента!';
@@ -80,7 +59,7 @@
                 }).done(function(res) {
                     readyRequest(res);
                 }).fail(function(jqXHR, textStatus) {
-                    readyRequest(textStatus);
+                    readyRequest('Ошибка загрузки:' + textStatus);
                 });
                 function readyRequest(txt) {
                     $(modal + ' .modal-body').html(txt);
@@ -92,7 +71,6 @@
             $(function() {
                 $('#myButton').on('click', function(){
                     getPage('index1.php');
-//                loadPages.getPage('index1.php');
                 });
             });
         </script>
